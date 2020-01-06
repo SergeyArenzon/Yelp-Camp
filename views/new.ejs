@@ -1,15 +1,20 @@
 <%- include('header.ejs') %>
-<h1>Create new campgrounds</h1>
-<form action = "/campgrounds" method = "POST">
-    <div class="form-group">
-      <input type="text" name = "name" class="form-control" aria-describedby="emailHelp" placeholder="name">
-      <input type="text" name = "image" class="form-control"  placeholder="image URL">
-    </div>
-    
-    
-    <button type="submit" class="btn btn-primary">Add</button>
-  </form>
 
-  <a href = "/campgrounds">Back</a>
+<h1 class = "text-center">Create new campgrounds</h1>
+<div class = "container " style = "width:30%;">
+  
+  <form action = "/campgrounds" method = "POST">
+      <div class="form-group text-center">
+        <input type="text" name = "name" class="form-control" aria-describedby="emailHelp" placeholder="name">
+        <input type="text" name = "image" class="form-control"  placeholder="image URL">
+      </div>
+      
+      
+      <button type="submit" class="btn btn-primary btn-block">Add</button>
+    </form>
+
+  <a href = "/campgrounds" >Back</a>
+</div>
+
 
   <%- include('footer.ejs') %>

@@ -2,17 +2,47 @@
 <%- include('header.ejs') %>    
 
 
-<h1>camp grounds</h1>
-
-<a href = "/campgrounds/new">Add new campground</a>
 
 
-<% campgrounds.forEach(function(site){ %>
-    <div> 
-        <h5> <%= site["name"] %> </h5> 
-        <img src = <%= site["image"] %> >     
+<!-- <nav class="navbar navbar-light bg-light">
+    <div class = "container-fluid">
+        <div class = "navbar-header">
+            <a class = "navbar-brand" href = "/">Yelp Camp</a>
+        </div>
+       
     </div>
-<% }) %>
+</nav>  -->
+
+
+
+
+
+
+<div class = "container">
+    <header class = "jumbotron">
+        <h1>CAMP GROUNDS</h1>
+        <p>Check our best campgrounds in ISRAEL</p>
+        <a class = "btn btn-primary" href = "/campgrounds/new">Add new campground</a>
+    </header>
+
+
+
+    
+
+    <div class = "row text-center" style = "display:flex; flex-wrap:wrap;"> 
+        <% campgrounds.forEach(function(site){ %>
+            <div class = " col-md-3 col-sm-6">
+                <div class = "img-responsive img-thumbnail ">  
+                    <img src = <%= site["image"] %> style = "width:100%;">
+                    <div class = caption>
+                        <h5> <%= site["name"] %> </h5>  
+                    </div>
+                     
+                </div>               
+            </div>           
+        <% }) %>
+    </div>
+</div>
 
 
 
