@@ -1,0 +1,35 @@
+
+<%- include('header.ejs') %>    
+
+
+<h1>camp grounds</h1>
+
+<a href = "/campgrounds/new">Add new campground</a>
+
+
+<% campgrounds.forEach(function(site){ %>
+    <div> 
+        <h5> <%= site["name"] %> </h5> 
+        <img src = <%= site["image"] %> >     
+    </div>
+<% }) %>
+
+
+
+
+
+
+
+
+<%- include('footer.ejs') %>   
+
+
+
+
+
+
+
+
+
+
+
