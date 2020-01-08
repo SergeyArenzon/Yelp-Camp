@@ -35,8 +35,12 @@
                 <div class = "img-responsive img-thumbnail ">  
                     <img src = <%= site["image"] %> style = "width:100%;">
                     <div class = caption>
-                        <h5> <%= site["name"] %> </h5>  
+                        <h5> <%= site["name"] %> </h5> 
+                        
+                        
+                        <a href = "/campgrounds/<%= site._id %>" name = "<%= site._name %>" image = "<%= site._image %>" class = "btn btn-primary" >More Info </a> 
                     </div>
+
                      
                 </div>               
             </div>           

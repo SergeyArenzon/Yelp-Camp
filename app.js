@@ -11,24 +11,11 @@ mongoose.connect('mongodb://localhost/yelp_camp',{ useUnifiedTopology: true, use
 // Schema setup
 var campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 var Campground = mongoose.model("kaki",campgroundSchema);
-
-// Campground.create(
-//     {name: "Mamshit National Park Nabataean Khan", image:"https://www.parks.org.il/wp-content/themes/joomi/inc/imgp.php?src=https://sales.parks.org.il//images/Fittings/ratag/Prod_Pic/515/515_Big.jpg&width=280&co=8&q=60"},
-//     function(err,campground){
-//         if(err){
-//             console.log("Error!");
-//         }else{
-//             console.log("Camp was added!!!"); 
-//         }
-//     }
-// );
-
-
-
 
 
 app.get("/",function(req,res){
@@ -38,12 +25,9 @@ app.get("/",function(req,res){
 });
 
 
-
-
-
-
 app.get("/campgrounds",function(req,res){
     
+
     // Get all canpground db
 
     Campground.find({},function(err,allCamps){
@@ -64,10 +48,10 @@ app.get("/campgrounds",function(req,res){
 app.post('/campgrounds',function(req,res){
     var name = req.body.name;
     var image = req.body.image;
-
+    var desc = req.body.description
     // Adding new camp to db
     Campground.create(
-    {name: name, image: image},
+    {name: name, image: image, description:desc},
     function(err,campground){
         if(err){
             console.log("Error!");
@@ -76,17 +60,30 @@ app.post('/campgrounds',function(req,res){
         }
     }
 );
-
     
     res.redirect('/campgrounds');
 });
 
+
+// Creating new campground page
 app.get('/campgrounds/new', function(req,res){
     res.render('new.ejs')
 });
 
 
+// Details obout specific campground
 
+app.get('/campgrounds/:id',function(req, res){
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err){
+            console.log("campground dont found!")
+        }else{
+            
+            res.render('camp_details.ejs',{campground: foundCampground}); 
+        }
+    });
+    
+});
 
 
 
