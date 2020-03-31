@@ -1,0 +1,25 @@
+<%- include('../partials/header.ejs') %>  
+
+<div class = "container " style = "width:30%;">
+    <div class="form-group text-center">
+        <h1><%= campground.name %></h1>
+        <img src = <%= campground.image %> >
+        <h5><%= campground.description %></h5>
+        <a class="btn btn-success" href = "/campgrounds/<%= campground._id %>/comments/new">  Add Comment</a>
+        <h4>Comments:</h4>
+        <% campground.comments.forEach(function(comment){ %>
+            <div>
+                <strong>Author:</strong> <%= comment.author %>
+                <strong>Text:  </strong> <%= comment.text %>
+
+            </div>
+        <% }) %>
+
+        
+        
+        
+    </div>
+    
+</div>
+
+<%- include('../partials/footer.ejs') %>   
