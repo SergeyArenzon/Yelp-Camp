@@ -2,3 +2,13 @@
 <h1><%= campground.name %></h1>
 <img src = <%= campground.image %> >
 <h5><%= campground.description %></h5>
+<h4>Comments:</h4>
+<% campground.comments.forEach(function(comment){ %>
+    <div>
+        <strong>Author:</strong> <%= comment.author %>
+        <strong>Text:  </strong> <%= comment.text %>
+    </div>
+    
+
+<% }) %>
+

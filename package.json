@@ -15,5 +15,8 @@
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.5",
     "node": "^13.5.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.2"
   }
 }
