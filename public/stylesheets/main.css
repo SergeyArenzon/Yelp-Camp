@@ -8,3 +8,8 @@
 .img-thumbnail .caption-full{
     padding: 10px;
 }
+
+
+#deleteBtn{
+    display: inline;
+}
