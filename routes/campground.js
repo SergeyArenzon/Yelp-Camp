@@ -2,6 +2,15 @@ var express = require("express");
 var router = express.Router();
 var Campground = require("../models/campgrounds");
 
+
+
+// ------------
+// /campgrounds
+// ------------
+
+
+
+
 router.get("/",isLoggedIn, function(req,res){
     // Get all canpground db
     Campground.find({},function(err,allCamps){
@@ -43,14 +52,6 @@ router.get('/new', function(req,res){
     res.render('campgrounds/new.ejs')
 });
 
-
-
-// ------------
-// /campgrounds
-// ------------
-
-
-
 // Details obout specific campground
 
 router.get('/:id',function(req, res){
@@ -63,6 +64,30 @@ router.get('/:id',function(req, res){
     });
 });
 
+// edit camp
+router.get("/:id/edit", function(req, res){
+
+    Campground.findById(req.params.id, function(err, campground){
+        if(err) console.log("campgrounds not found!");
+        else{
+            res.render("campgrounds/edit.ejs", {campground: campground});
+        }
+    })
+})
+
+
+// update camp
+router.put("/:id", function(req, res){
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCamp){
+        if(err) console.log("update camp not found!");
+        else{
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    });
+
+
+
+})
 
 
 function isLoggedIn(req, res, next){
