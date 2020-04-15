@@ -19,11 +19,11 @@ router.get("/new", isLoggedIn, function(req, res){
 
 router.post('/', isLoggedIn, function(req,res){
     var comment = {
-       text: req.body.text,
-       author:{
-           id: req.user._id,
-           username: req.user.username
-       }
+        text: req.body.text,
+        author:{
+            id: req.user._id,
+            username: req.user.username
+        }
     }
     Comment.create(comment, function(err, comment){
         if(err) console.log(err);
@@ -42,6 +42,46 @@ router.post('/', isLoggedIn, function(req,res){
         }
     });
 });
+
+
+// EDIT COMMENT
+
+router.get("/:commentId/edit", function(req, res){
+
+    Comment.findById(req.params.commentId, function(err, editedComment){
+        if(err) console.log("comment for eddit not found");
+        else{
+            res.render("comments/edit.ejs", {comment: editedComment, campground_id: req.params.id});
+        }
+    })
+});
+
+// UPDATE COMMENT
+
+router.put("/:commentId", function(req, res){
+    Comment.findById(req.params.commentId, function(err, updatedComment){
+        if(err) console.log("update comment not found");
+        else{
+            updatedComment.text = req.body.text;
+            updatedComment.save();
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    })
+});
+
+
+
+// DELETE COMMENT
+
+router.delete("/:commentId", function(req, res){
+    Comment.findByIdAndDelete(req.params.commentId, function(err, deletedComment){
+        if(err) console.log("comment delete id not found");
+        else{
+            res.redirect("back");
+        }
+    })
+});
+
 
 
 function isLoggedIn(req, res, next){
