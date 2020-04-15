@@ -46,7 +46,7 @@ router.post('/', isLoggedIn, function(req,res){
 
 // EDIT COMMENT
 
-router.get("/:commentId/edit", function(req, res){
+router.get("/:commentId/edit", checkCommentOwnership, function(req, res){
 
     Comment.findById(req.params.commentId, function(err, editedComment){
         if(err) console.log("comment for eddit not found");
@@ -58,7 +58,7 @@ router.get("/:commentId/edit", function(req, res){
 
 // UPDATE COMMENT
 
-router.put("/:commentId", function(req, res){
+router.put("/:commentId", checkCommentOwnership, function(req, res){
     Comment.findById(req.params.commentId, function(err, updatedComment){
         if(err) console.log("update comment not found");
         else{
@@ -73,7 +73,7 @@ router.put("/:commentId", function(req, res){
 
 // DELETE COMMENT
 
-router.delete("/:commentId", function(req, res){
+router.delete("/:commentId", checkCommentOwnership, function(req, res){
     Comment.findByIdAndDelete(req.params.commentId, function(err, deletedComment){
         if(err) console.log("comment delete id not found");
         else{
@@ -90,6 +90,28 @@ function isLoggedIn(req, res, next){
     }
     res.redirect("/login");
 }
+
+
+function checkCommentOwnership(req, res, next){
+    if(req.isAuthenticated()){ // logged in
+        Comment.findById(req.params.commentId, function(err, foundComment){
+            if(err) console.log("comment by id not found");
+            else{
+                if(foundComment.author.id.equals(req.user._id)){ // is the owner of the comment
+                    next();
+                }else{
+                    res.redirect("back");
+                }
+            }
+        })
+
+    }else{ // is'nt logged in
+        res.redirect("/login")
+
+
+    }
+}
+
 
 
 
