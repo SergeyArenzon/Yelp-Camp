@@ -9,7 +9,7 @@ var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var User = require("./models/user");
 var methodOverride = require("method-override");
-
+var flash = require("connect-flash");
 
 // ROUTES
 var commentRoutes = require("./routes/comment"),
@@ -25,7 +25,7 @@ mongoose.connect('mongodb://localhost/yelp_camp',{ useUnifiedTopology: true, use
 //stylesheets dir
 app.use(express.static(__dirname+"/public"));
 app.use(methodOverride("_method"));
-
+app.use(flash());
 //SeedDB();  //  seed db
 
 // ======================
@@ -46,6 +46,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

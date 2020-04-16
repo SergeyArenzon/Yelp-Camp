@@ -43,7 +43,7 @@ router.post("/register", function(req, res){
 
 // login
 router.get("/login", function(req, res){
-    res.render("login.ejs")
+    res.render("login.ejs");
 });
 
 router.post('/login', passport.authenticate("local",
@@ -59,7 +59,8 @@ router.post('/login', passport.authenticate("local",
 
 router.get("/logout", function(req, res){
     req.logout();
-    res.redirect("/");
+    req.flash("success", "YOU LOGGED IN!");
+    res.redirect("/campgrounds");
 });
 
 

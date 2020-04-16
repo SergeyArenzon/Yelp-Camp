@@ -11,7 +11,7 @@ var middleWareObj = require("../middleware/index");
 
 
 
-router.get("/",middleWareObj.isLoggedIn, function(req,res){
+router.get("/", function(req,res){
     // Get all canpground db
     Campground.find({},function(err,allCamps){
         if(err){
@@ -48,7 +48,7 @@ router.post('/', middleWareObj.isLoggedIn, function(req,res){
 
 
 // Creating new campground page
-router.get('/new', function(req,res){
+router.get('/new', middleWareObj.isLoggedIn, function(req,res){
     res.render('campgrounds/new.ejs')
 });
 

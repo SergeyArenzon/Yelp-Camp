@@ -33,6 +33,7 @@ middleWareObj.isLoggedIn = function(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash("error", "PLEASE LOG IN!");
     res.redirect("/login");
 }
 
