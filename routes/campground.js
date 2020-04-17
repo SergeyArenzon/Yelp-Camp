@@ -42,7 +42,7 @@ router.post('/', middleWareObj.isLoggedIn, function(req,res){
         }
     }
 );
-    
+    req.flash("success", "NEW POST WAS CREATED SUCCESSFULY!");
     res.redirect('/campgrounds');
 });
 
@@ -80,6 +80,7 @@ router.put("/:id", middleWareObj.checkCampOwnership,function(req, res){
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCamp){
         if(err) console.log("update camp not found!");
         else{
+            req.flash("success", "YOUR POST WAS EDITED SUCCESSFULY!");
             res.redirect("/campgrounds/" + req.params.id);
         }
     });
@@ -92,6 +93,7 @@ router.delete("/:id", middleWareObj.checkCampOwnership,function(req, res){
     Campground.findByIdAndDelete(req.params.id, function(err, deletedCamp){
         if(err) console.log("cant find and delete camp");
         else{
+            req.flash("success", "YOUR POST WAS DELETED SUCCESSFULY!");
             res.redirect("/campgrounds")
         }
     });

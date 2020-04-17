@@ -53,9 +53,7 @@ middleWareObj.checkCommentOwnership = function(req, res, next){
         })
 
     }else{ // is'nt logged in
-        res.redirect("/login")
-
-
+        res.redirect("/login");
     }
 }
 

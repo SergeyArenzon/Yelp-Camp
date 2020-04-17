@@ -1,0 +1,86 @@
+body{
+    background-color: #000;
+}
+
+#landing-header{
+    z-index: 1;
+    position: relative;
+    text-align: center;
+    padding-top: 40vh;
+}
+
+#landing-header h1{
+    color: #fff;
+}
+
+.slideshow {
+    position: fixed;
+    width: 100%; 
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.slideshow li {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    animation: imageAnimation 50s linear infinite;
+}
+
+.slideshow li:nth-child(1) {
+    background-image: url("https://img.theculturetrip.com/1440x/images/56-3646211-1430337061bf64daab4ecd4842938d149626875002.jpg");
+}
+
+.slideshow li:nth-child(2) {
+    background-image: url("https://img.theculturetrip.com/1024x/smart/images/56-3646217-1430337075703fb7e83cee4cffb3c6f2cecf75df0e.jpg");
+    animation-delay: 5s;
+}
+
+.slideshow li:nth-child(3) {
+    background-image: url("https://img.theculturetrip.com/1024x/smart/images/56-3646221-143033708451ce0b8c510b4dd2a7202983a1c024f6.jpg");
+    animation-delay: 10s;
+}
+
+.slideshow li:nth-child(4) {
+    background-image: url("https://img.theculturetrip.com/1024x/smart/images/56-3646223-14303370887710caba6f5f463eabc125e91e8b3327.jpg");
+    animation-delay: 15s;
+}
+.slideshow li:nth-child(5) {
+    background-image: url("https://img.theculturetrip.com/1024x/smart/images/56-3646225-1430337093c3fa55b9be824a8f88694ed463dc7e93.jpg");
+    animation-delay: 20s;
+}
+
+
+@keyframes imageAnimation { 
+  0% { 
+    opacity: 0; 
+    animation-timing-function: ease-in;
+  }
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    opacity: 1
+  }
+  30% {
+    opacity: 0
+  }
+}
+
+/* Older browser support - .no-cssanimations class added by modernizr */
+.no-cssanimations .slideshow li {
+	opacity: 1;
+}
