@@ -29,9 +29,10 @@ router.post('/', middleWareObj.isLoggedIn, function(req,res){
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description
+    var price = req.body.price;
     // Adding new camp to db
     Campground.create(
-    {name: name, image: image, description:desc,
+    {name: name, image: image, description:desc,price: price,
         author:{id: req.user._id, username: req.user.username}
     },
     function(err,campground){
@@ -53,7 +54,6 @@ router.get('/new', middleWareObj.isLoggedIn, function(req,res){
 });
 
 // Details obout specific campground
-
 router.get('/:id',function(req, res){
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
