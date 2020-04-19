@@ -27,12 +27,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 console.log(process.env.DATABASEURL);
 
 // DBs
-//var uri = 'mongodb+srv://sergey:sergey4191@campgrounds-x4msq.mongodb.net/test?retryWrites=true&w=majority';
+var uri = 'mongodb+srv://sergey:sergey4191@campgrounds-x4msq.mongodb.net/test?retryWrites=true&w=majority';
 //var local = 'mongodb://localhost/yelp_camp';
 
 // MongoDB connection
 mongoose.connect(
-    process.env.DATABASEURL, 
+    uri, 
     {useNewUrlParser: true, useUnifiedTopology: true });
 
 
