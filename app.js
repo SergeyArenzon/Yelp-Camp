@@ -24,15 +24,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //mongoose.connect('mongodb://localhost/yelp_camp',{ useUnifiedTopology: true, useNewUrlParser: true });
 
 
-console.log(process.env.DATABASEURL);
+//console.log(process.env.DATABASEURL);
 
 // DBs
-var uri = 'mongodb+srv://sergey:sergey4191@campgrounds-x4msq.mongodb.net/test?retryWrites=true&w=majority';
+//var uri = 'mongodb+srv://sergey:sergey4191@campgrounds-x4msq.mongodb.net/test?retryWrites=true&w=majority';
 //var local = 'mongodb://localhost/yelp_camp';
 
 // MongoDB connection
 mongoose.connect(
-    uri, 
+    process.env.DATABASEURL, 
     {useNewUrlParser: true, useUnifiedTopology: true });
 
 
