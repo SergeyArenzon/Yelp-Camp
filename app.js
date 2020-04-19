@@ -11,6 +11,7 @@ var User = require("./models/user");
 var methodOverride = require("method-override");
 var flash = require("connect-flash");
 
+
 // ROUTES
 var commentRoutes = require("./routes/comment"),
     campgroundRoutes = require("./routes/campground"),
@@ -19,8 +20,21 @@ var commentRoutes = require("./routes/comment"),
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// Mongodb connection
-mongoose.connect('mongodb://localhost/yelp_camp',{ useUnifiedTopology: true, useNewUrlParser: true });
+// local Mongodb connection
+//mongoose.connect('mongodb://localhost/yelp_camp',{ useUnifiedTopology: true, useNewUrlParser: true });
+
+
+console.log(process.env.DATABASEURL);
+
+// DBs
+//var uri = 'mongodb+srv://sergey:sergey4191@campgrounds-x4msq.mongodb.net/test?retryWrites=true&w=majority';
+//var local = 'mongodb://localhost/yelp_camp';
+
+// MongoDB connection
+mongoose.connect(
+    process.env.DATABASEURL, 
+    {useNewUrlParser: true, useUnifiedTopology: true });
+
 
 //stylesheets dir
 app.use(express.static(__dirname+"/public"));
@@ -55,7 +69,6 @@ app.use(function(req, res, next){
 app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
-
 
 
 app.listen(8080,process.env.ip,function(){
