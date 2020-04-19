@@ -71,6 +71,6 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 
-app.listen(8080,process.env.ip,function(){
+app.listen(process.env.PORT || 8080, process.env.ip, function(){
     console.log('Server is running!');
 });
