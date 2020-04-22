@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //console.log(process.env.DATABASEURL);
 
 // DBs
-var url = process.env.DATABASEURL || 'mongodb://localhost/yelp_camp'
+var url = process.env.DATABASEURL || 'mongodb://localhost/yelp_camp';
 // MongoDB connection
 mongoose.connect(
     url, 

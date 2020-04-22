@@ -34,7 +34,20 @@ router.post('/', middleWareObj.isLoggedIn, function(req,res){
                 else{
                     // push comment to found camp
                     campground.comments.push(comment);
+
+
+                    rating = {
+                        stars: req.body.stars,
+                        id: req.params.id
+                    }
+
+
+                    // RATING //
+                    campground.rating.push(rating);
                     campground.save();
+                    // RATING //
+
+
                     console.log("New comment added!");
                     req.flash("success", "YOUR COMMENT WAS ADDED SUCCESSFULY!");
                     res.redirect("/campgrounds/" + campground._id);

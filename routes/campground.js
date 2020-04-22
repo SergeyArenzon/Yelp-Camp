@@ -69,6 +69,7 @@ router.get("/:id/edit", middleWareObj.checkCampOwnership,function(req, res){
     Campground.findById(req.params.id, function(err, campground){
     if(err) console.log("campgrounds not found!");
     else{
+        
         res.render("campgrounds/edit.ejs", {campground: campground});
         }
     })
@@ -78,6 +79,7 @@ router.get("/:id/edit", middleWareObj.checkCampOwnership,function(req, res){
 // update camp
 router.put("/:id", middleWareObj.checkCampOwnership,function(req, res){
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCamp){
+        
         if(err) console.log("update camp not found!");
         else{
             req.flash("success", "YOUR POST WAS EDITED SUCCESSFULY!");
