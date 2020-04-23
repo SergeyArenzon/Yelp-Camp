@@ -108,10 +108,11 @@ router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
         stars :req.body.star,
         id: req.user.id
     } 
+    
     Campground.findById(req.params.id, function(err, foundCamp){
         if(err) console.log(err);
         else{
-            foundCamp.rating = rating;
+            foundCamp.rating.push(rating);
             foundCamp.save();
             res.redirect('/campgrounds/' + req.params.id);
         }
