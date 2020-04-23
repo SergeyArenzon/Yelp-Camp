@@ -3,14 +3,21 @@
 <div class = "container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">YelpCamp</p>
-            <div class="list-group">
-                
-                    <li class="list-group-item active">Info 1</li>
-                    <li class="list-group-item">Info 2</li>
-                    <li class="list-group-item">Info 3</li>
-                
-            </div>
+            <form action="<%= campground._id %>/rating?_method=POST" method="POST">
+                <div class="rating">
+                    <input type="radio" name="star" value=5 id="star1"> 
+                    <label for="star1"></label>
+                    <input type="radio" name="star" value=4 id="star2"> 
+                    <label for="star2"></label>
+                    <input type="radio" name="star" value=3 id="star3"> 
+                    <label for="star3"></label>
+                    <input type="radio" name="star" value=2 id="star4"> 
+                    <label for="star4"></label>
+                    <input type="radio" name="star" value=1 id="star5"> 
+                    <label for="star5"></label>
+                </div>
+                <label for="rating"> <button>rate</button> </label>
+            </form>
         </div>   
         <div class="col-md-9">
             <div class="img-thumbnail">
@@ -29,7 +36,14 @@
                         <form id="deleteBtn" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
                             <button  class="btn btn-sm btn-danger">Delete</button>
                         </form>
-                    <% } %> 
+                    <% } %>
+                    <!-- STAR RATING -->
+                    <!-- <form>
+                        <input type="number" id="quantity" name="stars" max="5" min="1" step="1" class="form-control" placeholder="rating"> 
+                    </form>
+                    <button>RATE</button> -->
+                    <!-- STAR RATING -->
+                    <!-- STAR RATING -->
                 </div>
             </div>
             <div class="card card-body bg-light">
@@ -49,7 +63,7 @@
                                 <form id="deleteBtn" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                                     <input type="submit" class="btn btn-sm btn-danger" value="Delete"></input>
                                 </form>
-                            <% } %>     
+                            <% } %>      
                         </div>              
                     </div>
                 <% }) %>

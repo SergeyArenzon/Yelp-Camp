@@ -14,9 +14,55 @@
     display: inline;
 }
 
-.rating > span:hover:before {
-    content: "\2605";
-    position: absolute;
+
+.rating {
+    
+    transform: translate(-70%, 0%) rotateY(180deg);
+    top: 50%;
+    left: 50%;
+    display: flex;
+}
+
+.rating input{
+    display: none;
+    
+} 
+.rating label {
+
+    display: block;
+    cursor: pointer;
+    width: 50px;
+    
+}
+
+.rating label:before {
+    content: '\f005';
+    font-family: fontAwesome;
+    position: relative;
+    display: block;
+    font-size: 50px;
+    color: #cdd5dd;
+
+
 }
 
 
+.rating label:after {
+    content: '\f005';
+    font-family: fontAwesome;
+    position: absolute;
+    display: block;
+    font-size: 50px;
+    color: #1f9cff;
+    top: 0;
+    opacity: 0;
+    transition: .5s;
+    text-shadow: 0 2px 5px rgba(0,0,0,.5);
+} 
+
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+.rating input:checked ~ label:after{
+    opacity: 1; 
+}
+    

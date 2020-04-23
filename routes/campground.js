@@ -101,4 +101,22 @@ router.delete("/:id", middleWareObj.checkCampOwnership,function(req, res){
     });
 });
 
+
+// RATING ROUTE
+router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
+    var rating = {
+        stars :req.body.star,
+        id: req.user.id
+    } 
+    Campground.findById(req.params.id, function(err, foundCamp){
+        if(err) console.log(err);
+        else{
+            foundCamp.rating = rating;
+            foundCamp.save();
+            res.redirect('/campgrounds/' + req.params.id);
+        }
+    });
+});
+
+
 module.exports = router;
