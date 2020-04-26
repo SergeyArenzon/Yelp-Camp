@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Campground = require("../models/campgrounds");
 var middleWareObj = require("../middleware/index");
-
+var Rating = require('../models/rating')
 
 // ------------
 // /campgrounds
@@ -105,19 +105,30 @@ router.delete("/:id", middleWareObj.checkCampOwnership,function(req, res){
 // RATING ROUTE
 router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
     var rating = {
-        stars :req.body.star,
-        id: req.user.id
+        stars : req.body.star,
+        user: req.user.id,
+        campground: req.params.id 
     } 
-    
-    Campground.findById(req.params.id, function(err, foundCamp){
-        if(err) console.log(err);
-        else{
-            foundCamp.rating.push(rating);
-            foundCamp.save();
-            res.redirect('/campgrounds/' + req.params.id);
+
+    Rating.find({user: req.user.id, campground: req.params.id}, function(err, foundRating){
+
+        // no rating found
+        if(foundRating.length < 1){ 
+            Rating.create(rating, function(err){
+                if(err) console.log(err);
+                else res.redirect('/campgrounds/' + req.params.id );
+            })
+
+        // rating exist    
+        }else{  
+            foundRating[0].stars = req.body.star;
+            foundRating[0].save();
+            res.redirect('/campgrounds/' + req.params.id );
         }
     });
 });
+
+
 
 
 module.exports = router;

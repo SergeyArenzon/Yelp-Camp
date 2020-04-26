@@ -20,17 +20,11 @@ var campgroundSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Comment"
         }
-    ],// RATING //
-    rating: [
-        {   
-            stars: Number,
-            id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User"
-            }
-        }
-    ]// RATING //
+    ]
 });
+
+
+
 
 
 

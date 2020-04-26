@@ -1,9 +1,12 @@
 <%- include('../partials/header.ejs') %>  
 
+
+
+
 <div class = "container">
     <div class="row">
         <div class="col-md-3">
-            <form action="<%= campground._id %>/rating?_method=POST" method="POST">
+            <form action="/campgrounds/<%= campground._id %>/rating?_method=POST" method="POST">
                 <div class="rating">
                     <input type="radio" name="star" value=5 id="star1"> 
                     <label for="star1"></label>
@@ -71,6 +74,8 @@
         </div>  
     </div>
 </div>
+
+
 
 
 <%- include('../partials/footer.ejs') %>   

@@ -28,14 +28,14 @@ var url = process.env.DATABASEURL || 'mongodb://localhost/yelp_camp';
 // MongoDB connection
 mongoose.connect(
     url, 
-    {useNewUrlParser: true, useUnifiedTopology: true });
-
+    {useNewUrlParser: true, useUnifiedTopology: true});
 
 //stylesheets dir
 app.use(express.static(__dirname+"/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
 //SeedDB();  //  seed db
+
 
 // ======================
 // PASSPORT CONFIGURATION
@@ -69,3 +69,4 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 app.listen(process.env.PORT || 8080, process.env.ip, function(){
     console.log('Server is running!');
 });
+
