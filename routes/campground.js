@@ -3,12 +3,13 @@ var router = express.Router();
 var Campground = require("../models/campgrounds");
 var middleWareObj = require("../middleware/index");
 var Rating = require('../models/rating')
+var funcs = require('./../public/javascripts/index.js');
+
+
 
 // ------------
 // /campgrounds
 // ------------
-
-
 
 
 router.get("/", function(req,res){
@@ -21,7 +22,6 @@ router.get("/", function(req,res){
             res.render('campgrounds/campgrounds.ejs',{campgrounds:allCamps});
         }
     });
-    
 });
 
 
@@ -59,8 +59,11 @@ router.get('/:id',function(req, res){
         if(err){
             console.log("campground dont found!")
         }else{
+            
+            var c = funcs(req.params.id);
+            console.log(c);
             res.render('campgrounds/camp_details.ejs',{campground: foundCampground}); 
-        }
+        }   
     });
 });
 
@@ -104,29 +107,69 @@ router.delete("/:id", middleWareObj.checkCampOwnership,function(req, res){
 
 // RATING ROUTE
 router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
-    var rating = {
+    var new_rating = {
         stars : req.body.star,
         user: req.user.id,
-        campground: req.params.id 
     } 
 
-    Rating.find({user: req.user.id, campground: req.params.id}, function(err, foundRating){
+    Campground.findById(req.params.id).populate("ratings").exec( function(err, foundCampground){
+        
+        var rating_exist = false;
 
-        // no rating found
-        if(foundRating.length < 1){ 
-            Rating.create(rating, function(err){
+        foundCampground.ratings.forEach(rating => {
+            console.log(rating.user);
+            console.log(req.user.id);
+            // check if rating exist
+            // if exist update stars to inputed stars
+            if(rating.user == req.user.id && !rating_exist) { 
+                rating_exist = true;
+                
+                Rating.findById(rating._id, function(err, foundRating){
+                    if(err) console.log(err);
+                    else{
+                        foundRating.stars = req.body.star; 
+                        foundRating.save();
+                    }
+                })
+            }
+        });
+        // if rating not exist 
+        // create new rating and push it to campground
+        if(rating_exist === false){
+            Rating.create(new_rating, function(err, newRating){
                 if(err) console.log(err);
-                else res.redirect('/campgrounds/' + req.params.id );
-            })
+                else{
+                    foundCampground.ratings.push(newRating);
+                    foundCampground.save();
 
-        // rating exist    
-        }else{  
-            foundRating[0].stars = req.body.star;
-            foundRating[0].save();
-            res.redirect('/campgrounds/' + req.params.id );
-        }
+                }
+            })
+        }       
     });
-});
+
+
+
+
+
+
+//     Rating.find({user: req.user.id}, function(err, foundRating){
+
+//         // no rating found
+//         if(foundRating.length < 1){ 
+//             Rating.create(rating, function(err){
+//                 if(err) console.log(err);
+//                 else res.redirect('/campgrounds/' + req.params.id );
+//             })
+
+//         // rating exist    
+//         }else{  
+//             foundRating[0].stars = req.body.star;
+//             foundRating[0].save();
+//             res.redirect('/campgrounds/' + req.params.id );
+//         }
+//     });
+res.redirect('/campgrounds/' + req.params.id );
+ });
 
 
 
