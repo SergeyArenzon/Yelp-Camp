@@ -59,11 +59,18 @@ router.get('/:id',function(req, res){
         if(err){
             console.log("campground dont found!")
         }else{
-            
+
+            // find current camp and compute Avg.Rating
             Campground.findById(req.params.id).populate("ratings").exec(function(err, foundCamp){
                 if(err) console.log(err);
                 else{
-                    var camp_avg_rating = js_scripts(foundCamp.ratings).toFixed(1);
+                    // check if camp has no ratings and return Avg.Rating = 0
+                    if(foundCamp.ratings.length < 1) {
+                        var camp_avg_rating = 0;
+                    }
+                    else{
+                        var camp_avg_rating = js_scripts(foundCamp.ratings).toFixed(1);
+                    }
                 }
                 res.render('campgrounds/camp_details.ejs',{campground: foundCampground, rating: camp_avg_rating});
             })
@@ -111,18 +118,22 @@ router.delete("/:id", middleWareObj.checkCampOwnership,function(req, res){
 
 // RATING ROUTE
 router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
+
+    // user input NaN scenario -> req.body.star = 0
+    if(req.body.star === undefined) {
+        req.body.star = 0;
+    } 
+    
     var new_rating = {
         stars : req.body.star,
         user: req.user.id,
     } 
-
+    
     Campground.findById(req.params.id).populate("ratings").exec( function(err, foundCampground){
         
         var rating_exist = false;
 
-        foundCampground.ratings.forEach(rating => {
-            console.log(rating.user);
-            console.log(req.user.id);
+        foundCampground.ratings.forEach(rating => {      
             // check if rating exist
             // if exist update stars to inputed stars
             if(rating.user == req.user.id && !rating_exist) { 
@@ -140,7 +151,7 @@ router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
         // if rating not exist 
         // create new rating and push it to campground
         if(rating_exist === false){
-            Rating.create(new_rating, function(err, newRating){
+            Rating.create(new_rating, function(err, newRating){ 
                 if(err) console.log(err);
                 else{
                     foundCampground.ratings.push(newRating);
@@ -151,8 +162,5 @@ router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
     });
     res.redirect('/campgrounds/' + req.params.id );
 });
-
-
-
 
 module.exports = router;
