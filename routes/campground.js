@@ -3,7 +3,7 @@ var router = express.Router();
 var Campground = require("../models/campgrounds");
 var middleWareObj = require("../middleware/index");
 var Rating = require('../models/rating')
-var funcs = require('./../public/javascripts/index.js');
+var js_scripts = require('./../public/javascripts/index.js');
 
 
 
@@ -60,9 +60,13 @@ router.get('/:id',function(req, res){
             console.log("campground dont found!")
         }else{
             
-            var c = funcs(req.params.id);
-            console.log(c);
-            res.render('campgrounds/camp_details.ejs',{campground: foundCampground}); 
+            Campground.findById(req.params.id).populate("ratings").exec(function(err, foundCamp){
+                if(err) console.log(err);
+                else{
+                    var camp_avg_rating = js_scripts(foundCamp.ratings).toFixed(1);
+                }
+                res.render('campgrounds/camp_details.ejs',{campground: foundCampground, rating: camp_avg_rating});
+            })
         }   
     });
 });
@@ -141,35 +145,12 @@ router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
                 else{
                     foundCampground.ratings.push(newRating);
                     foundCampground.save();
-
                 }
             })
         }       
     });
-
-
-
-
-
-
-//     Rating.find({user: req.user.id}, function(err, foundRating){
-
-//         // no rating found
-//         if(foundRating.length < 1){ 
-//             Rating.create(rating, function(err){
-//                 if(err) console.log(err);
-//                 else res.redirect('/campgrounds/' + req.params.id );
-//             })
-
-//         // rating exist    
-//         }else{  
-//             foundRating[0].stars = req.body.star;
-//             foundRating[0].save();
-//             res.redirect('/campgrounds/' + req.params.id );
-//         }
-//     });
-res.redirect('/campgrounds/' + req.params.id );
- });
+    res.redirect('/campgrounds/' + req.params.id );
+});
 
 
 

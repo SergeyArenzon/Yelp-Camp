@@ -9,8 +9,5 @@ var ratingSchema = new Schema({
     }
 });
 
-
-
 var Rating = mongoose.model('Rating', ratingSchema);
-
 module.exports = Rating;
