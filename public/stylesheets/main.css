@@ -65,9 +65,23 @@
 .rating input:checked ~ label:after{
     opacity: 1; 
 }
-    
-
 
 ul {
     list-style-type: none;
+}
+
+.posFeedback {
+    background-color:greenyellow;
+}
+
+.negFeedback {
+    background-color: red;
+}
+
+
+#posFeedBackList {
+    padding-left: 0;
+}
+#negFeedBackList {
+    padding-left: 0;
 }

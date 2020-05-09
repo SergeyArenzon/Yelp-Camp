@@ -26,11 +26,16 @@ router.get("/", function(req,res){
 
 
 router.post('/', middleWareObj.isLoggedIn, function(req,res){
+
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description
     var price = req.body.price;
     var date = new Date().toLocaleString('en-IL', { timeZone: 'Asia/Jerusalem' });
+
+    // pos/neg deefbacks for camp
+    var positiveFB = req.body.posFB;
+    var negativeFB = req.body.negFB
 
     // moment date scheme
     date = date.split(/[ :/,]/);
@@ -39,12 +44,23 @@ router.post('/', middleWareObj.isLoggedIn, function(req,res){
     // Adding new camp to db
     Campground.create(
     {name: name, image: image, date: momentDate, description:desc,price: price,
-        author:{id: req.user._id, username: req.user.username}
+        author:{
+            id: req.user._id, 
+            username: req.user.username
+        },
+        feedbacks: {
+            positive: positiveFB,
+            negative: negativeFB    
+        } 
     },
+
     function(err,campground){
         if(err){
-            console.log("Error!");
+            console.log(err);
+
         }else{
+            
+
             console.log("Camp was added!!!"); 
         }
     }
@@ -139,6 +155,7 @@ router.post("/:id/rating", middleWareObj.isLoggedIn, function(req, res){
         user: req.user.id,
     } 
     
+
     Campground.findById(req.params.id).populate("ratings").exec( function(err, foundCampground){
         
         var rating_exist = false;

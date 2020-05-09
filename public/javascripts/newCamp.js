@@ -1,17 +1,25 @@
 
 
 document.getElementById('plusBtn').addEventListener('click', () => {
+
+    var li = document.createElement("li");
+    var feedback_format = 
+    "<div id=\"serverSelect\">" 
+        + "<input  type=\"text\"  name=\"posFB\" >"
+    + "</div>";
+    li.innerHTML = feedback_format;
+    document.getElementById('posFeedBackList').appendChild(li);    
+});
+
+
+document.getElementById('minusBtn').addEventListener('click', () => {
     
     var li = document.createElement("li");
 
     var feedback_format = 
-    "<form id=\"serverSelect\">" 
-        + "<input type=\"radio\" name=\"feedback\" value=\"1\">Positive<br>"
-        + "<input type=\"radio\" name=\"feedback\" value=\"2\">Negative<br>"
-        + "<input  type=\"text\">"
-        + "<input  type=\"button\" value=\"Submit\">"
-    + "</form>";
-
+    "<div id=\"serverSelect\">" 
+        + "<input  type=\"text\" name=\"negFB\">"
+    + "</div>";
     li.innerHTML = feedback_format;
-    document.getElementById('feedBackList').appendChild(li);    
+    document.getElementById('negFeedBackList').appendChild(li);    
 });

@@ -13,14 +13,19 @@
         <input type="text" name = "image" class="form-control"  placeholder="image URL">
         <input type="text" name = "description" class="form-control"  placeholder="description">
         <input type="number" id="quantity" name="price" min="0.01" step="0.01" class="form-control" placeholder="price">
-        
       </div>
-      <div>
-        <ul id="feedBackList">         
-        </ul> 
-        <button id="plusBtn" type="button">+</button>
-        <button type="button">-</button>
-      </div>
+      <div class="row border border-secondary rounded">
+        <!--  POS table feedbacks -->
+        <div class="col posFeedback">
+          <button id="plusBtn" type="button">+</button>
+            <ul id="posFeedBackList"></ul>         
+        </div>
+        <!-- NEG table feedbacks -->
+        <div class="col negFeedback">
+          <button id="minusBtn" type="button">-</button>         
+            <ul id="negFeedBackList"></ul> 
+        </div>
+      </div> 
       <button type="submit" class="btn btn-primary btn-block">Add</button>
     </form>
   <a href = "/campgrounds" >Back</a>

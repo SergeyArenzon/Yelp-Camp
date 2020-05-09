@@ -27,11 +27,13 @@ var campgroundSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Rating"
         }
-    ]
+    ],
+    feedbacks: {
+        positive: [String],
+        negative: [String]
+    } 
+        
 });
-
-
-
 
 
 
