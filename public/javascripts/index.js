@@ -1,10 +1,11 @@
+
 var Campground = require('../../models/campgrounds');
 
 
 
 
 // CALCULATE THE AVG OF CAPS RATINGS
-module.exports =  (camp_ratings) => {
+module.exports = (camp_ratings) => {
     var sum = 0;
     var size = camp_ratings.length;
 
@@ -13,5 +14,3 @@ module.exports =  (camp_ratings) => {
     });
     return sum / size;
 };
-
-

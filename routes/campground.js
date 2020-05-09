@@ -31,10 +31,14 @@ router.post('/', middleWareObj.isLoggedIn, function(req,res){
     var desc = req.body.description
     var price = req.body.price;
     var date = new Date().toLocaleString('en-IL', { timeZone: 'Asia/Jerusalem' });
-    
+
+    // moment date scheme
+    date = date.split(/[ :/,]/);
+    momentDate =  date[2] + date[1] + date[0] + date[4] + date[5];
+
     // Adding new camp to db
     Campground.create(
-    {name: name, image: image, date: date, description:desc,price: price,
+    {name: name, image: image, date: momentDate, description:desc,price: price,
         author:{id: req.user._id, username: req.user.username}
     },
     function(err,campground){
