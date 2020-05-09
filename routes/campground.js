@@ -66,6 +66,9 @@ router.get('/:id',function(req, res){
             console.log("campground dont found!")
         }else{
 
+            // find current camp and compute time before created 
+            var createdBefore = js_scripts.timeCalculator(foundCampground.date);
+
             // find current camp and compute Avg.Rating
             Campground.findById(req.params.id).populate("ratings").exec(function(err, foundCamp){
                 if(err) console.log(err);
@@ -75,10 +78,11 @@ router.get('/:id',function(req, res){
                         var camp_avg_rating = 0;
                     }
                     else{
-                        var camp_avg_rating = js_scripts(foundCamp.ratings).toFixed(1);
+                        var camp_avg_rating = js_scripts.averageRatingCount(foundCamp.ratings).toFixed(1);
+                        
                     }
                 }
-                res.render('campgrounds/camp_details.ejs',{campground: foundCampground, rating: camp_avg_rating});
+                res.render('campgrounds/camp_details.ejs',{campground: foundCampground, rating: camp_avg_rating, createdBefore: createdBefore});
             })
         }   
     });
