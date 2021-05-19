@@ -10,7 +10,7 @@ var LocalStrategy = require("passport-local");
 var User = require("./models/user");
 var methodOverride = require("method-override");
 var flash = require("connect-flash");
-
+require('dotenv').config()
 
 // ROUTES
 var commentRoutes = require("./routes/comment"),
@@ -24,8 +24,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //console.log(process.env.DATABASEURL);
 
 // DBs
-var url = process.env.DATABASEURL || 'mongodb://localhost/yelp_camp';
+var url = process.env.DATABASEURL ;
 // MongoDB connection
+
+console.log(url)
 mongoose.connect(
     url, 
     {useNewUrlParser: true, useUnifiedTopology: true});
